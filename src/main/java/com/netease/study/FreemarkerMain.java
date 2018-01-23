@@ -17,7 +17,7 @@ public class FreemarkerMain {
 		Configuration cfg = new Configuration(Configuration.VERSION_2_3_22);
 		cfg.setSharedVariable("valid", new ValidDirective());
 		cfg.setDirectoryForTemplateLoading(
-				new File("D:/java/freemarker_study/src/main/resources"));
+				new File("E:/eclipse/freemarker_study/src/main/resources"));
 		cfg.setDefaultEncoding("UTF-8");
 		cfg.setTemplateExceptionHandler(TemplateExceptionHandler.RETHROW_HANDLER);
 

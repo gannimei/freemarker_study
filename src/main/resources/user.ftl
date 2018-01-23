@@ -6,6 +6,6 @@
     <body>
     	<p>Name：${name}</p>
     	<p>Password：${password}</p>
-    	<@valid className="com.netease.study.UserEditModel"></@valid>
+    	<@valid className="com.netease.study.UserEditModel" formName="userLogin"></@valid>
     </body>
 </html>
