@@ -1,6 +1,7 @@
 package com.netease.study;
 
 import java.io.IOException;
+import java.io.Writer;
 import java.lang.annotation.Annotation;
 import java.lang.reflect.Field;
 import java.lang.reflect.InvocationTargetException;
@@ -43,9 +44,13 @@ public class ValidDirective implements TemplateDirectiveModel {
 				}
 			}
 			if(!rules.isEmpty() && !messages.isEmpty()) {
-				validateScript = String.format("<script>\n$().ready(function() {\n\t$(\"#%s\").validate({\n\t\trules {%s\n\t\t},\n\t\tmessage {%s\n\t\t}\n\t});\n});\n<script>", formName, rules.substring(0, rules.length() - 1), messages.substring(0, messages.length() - 1));
+				validateScript = String.format("<script>\n$().ready(function() {\n\t$(\"#%s\").validate({\n\t\trules {%s\n\t\t},\n\t\tmessages {%s\n\t\t}\n\t});\n});\n<script>", formName, rules.substring(0, rules.length() - 1), messages.substring(0, messages.length() - 1));
 			}
-			System.out.println(validateScript);
+			Writer writer = env.getOut();
+			System.out.println(writer == null);
+			System.out.println(body == null);
+			writer.write(validateScript);
+			body.render(writer);
 		} catch (ClassNotFoundException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
