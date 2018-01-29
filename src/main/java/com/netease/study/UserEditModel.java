@@ -17,8 +17,6 @@ public class UserEditModel {
 	@Length(min = 6, message = "最少输入{min}个字符")
 	private String password;
 
-	@NotEmpty(message = "不能为空")
-	@Length(min = 6, message = "最少输入{min}个字符")
 	private String confirmPassword;
 
 	@NotEmpty(message = "不能为空")

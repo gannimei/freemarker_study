@@ -20,7 +20,6 @@ public class ValidDirective implements TemplateDirectiveModel {
 	
 	public ValidDirective() throws NoSuchMethodException, SecurityException {
 		this.validCreator = new ValidCreator();
-		
 	}
 	
 	public void execute(Environment env, Map params, TemplateModel[] model, TemplateDirectiveBody body)
@@ -35,7 +34,7 @@ public class ValidDirective implements TemplateDirectiveModel {
 			Class<?> c = Class.forName(className);
 			Field[] fields = c.getDeclaredFields();
 			for(Field field : fields) {
-				Map<String, String> result = GetValidationRule(field);
+				Map<String, String> result = GetValidationRule(field, c);
 				if(result.containsKey("rule") && result.containsKey("message")) {
 					String fieldRule = String.format("\n\t\t\t" + field.getName() + ": {%s\n\t\t\t},", result.get("rule"));
 					String fieldMessage = String.format("\n\t\t\t" + field.getName() + ": {%s\n\t\t\t},", result.get("message"));
@@ -66,8 +65,9 @@ public class ValidDirective implements TemplateDirectiveModel {
 		}
 	}
 	
-	private Map<String, String> GetValidationRule(Field field) throws IllegalAccessException, IllegalArgumentException, InvocationTargetException {
+	private Map<String, String> GetValidationRule(Field field, Class<?> c) throws IllegalAccessException, IllegalArgumentException, InvocationTargetException {
 		Map<String, String> result = new HashMap<String, String>();
+		Compare compare = c.getDeclaredAnnotation(Compare.class);
 		String rule = "";
 		String message = "";
 		Annotation[] annotations = field.getAnnotations();
@@ -78,6 +78,10 @@ public class ValidDirective implements TemplateDirectiveModel {
 				message += valid.get("message");
 			}
 		}
+		if(compare != null && compare.verifyField().equals(field.getName())) {
+			rule += String.format("\n\t\t\t\tequalTo:\'#%s\',", compare.field());
+			message += ("\n\t\t\t\tequalTo:\"" + compare.message() + "\",");
+		}
 		if(!rule.isEmpty()) {
 			result.put("rule", rule.substring(0, rule.length() - 1));
 		}
@@ -86,7 +90,5 @@ public class ValidDirective implements TemplateDirectiveModel {
 		}
 		return result;
 	}
-	
-	
 
 }
