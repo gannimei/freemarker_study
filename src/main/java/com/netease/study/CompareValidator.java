@@ -1,7 +1,9 @@
 package com.netease.study;
 
+import java.lang.annotation.Annotation;
 import java.lang.reflect.Field;
 
+import javax.validation.Constraint;
 import javax.validation.ConstraintValidator;
 import javax.validation.ConstraintValidatorContext;
 
@@ -19,7 +21,18 @@ public class CompareValidator implements ConstraintValidator<Compare, Object> {
 	public boolean isValid(Object value, ConstraintValidatorContext context) {
 		// TODO Auto-generated method stub
 		try {
+			
 			Class<?> modelType = value.getClass();
+			System.out.println(modelType.getName());
+			Annotation[] annotations = modelType.getDeclaredAnnotations();
+			System.out.println(annotations.length);
+			for (Annotation annotation : annotations) {
+				System.out.println(annotation.annotationType().getName());
+				Constraint cons = annotation.annotationType().getDeclaredAnnotation(Constraint.class);
+				if(cons != null) {
+					System.out.println(cons.validatedBy()[0].getName());
+				}
+			}
 			Field fieldValue = modelType.getDeclaredField(field);
 			fieldValue.setAccessible(true);
 			Field verifyFieldValue = modelType.getDeclaredField(verifyField);
