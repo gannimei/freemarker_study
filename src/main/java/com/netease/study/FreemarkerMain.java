@@ -46,11 +46,11 @@ public class FreemarkerMain {
 		model.setUserName("guanzhen");
 		//model.setConfirmPassword("654321");
 		Set<ConstraintViolation<UserEditModel>> constraintViolations = validator.validate(model);
-		for (ConstraintViolation<UserEditModel> constraintViolation : constraintViolations) {  
+/*		for (ConstraintViolation<UserEditModel> constraintViolation : constraintViolations) {  
             System.out.println("对象属性:"+constraintViolation.getPropertyPath());  
             System.out.println("国际化key:"+constraintViolation.getMessageTemplate());  
             System.out.println("错误信息:"+constraintViolation.getMessage());  
-        } 
+        } */
 		
 	}
 

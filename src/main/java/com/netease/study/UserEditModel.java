@@ -6,7 +6,7 @@ import org.hibernate.validator.constraints.Email;
 import org.hibernate.validator.constraints.Length;
 import org.hibernate.validator.constraints.NotEmpty;
 
-@Compare(field = "password", verifyField = "confirmPassword")
+@CustomValidator
 public class UserEditModel {
 
 	@NotEmpty(message = "不能为空")
@@ -19,6 +19,7 @@ public class UserEditModel {
 
 	@NotEmpty(message = "不能为空")
 	@Length(min = 6, message = "最少输入{min}个字符")
+	@Compare(verifyField = "password", message = "密码不一致")
 	private String confirmPassword;
 
 	@NotEmpty(message = "不能为空")

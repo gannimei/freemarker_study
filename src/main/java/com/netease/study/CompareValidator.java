@@ -1,48 +1,22 @@
 package com.netease.study;
 
-import java.lang.reflect.Field;
+public class CompareValidator implements CustomConstraintValidator<Compare> {
 
-import javax.validation.ConstraintValidator;
-import javax.validation.ConstraintValidatorContext;
-
-public class CompareValidator implements ConstraintValidator<Compare, Object> {
-
-	private String field;
-	private String verifyField;
-	
+	/* (non-Javadoc)
+	 * @see com.netease.study.CustomConstraintValidator#initialize(java.lang.annotation.Annotation)
+	 */
 	public void initialize(Compare constraintAnnotation) {
 		// TODO Auto-generated method stub
-		this.field = constraintAnnotation.field();
-		this.verifyField = constraintAnnotation.verifyField();
+		System.out.println("aaa");
+		System.out.println(constraintAnnotation.message());
+		System.out.println(constraintAnnotation.verifyField());
 	}
 
-	public boolean isValid(Object value, ConstraintValidatorContext context) {
+	/* (non-Javadoc)
+	 * @see com.netease.study.CustomConstraintValidator#isValid(java.lang.Object, javax.validation.ConstraintValidatorContext)
+	 */
+	public boolean isValid(Object value) {
 		// TODO Auto-generated method stub
-		try {
-			Class<?> modelType = value.getClass();
-			Field fieldValue = modelType.getDeclaredField(field);
-			fieldValue.setAccessible(true);
-			Field verifyFieldValue = modelType.getDeclaredField(verifyField);
-			verifyFieldValue.setAccessible(true);
-			if(fieldValue.get(value).equals(verifyFieldValue.get(value))) {
-				return true;
-			}
-			String messageTemplate = context.getDefaultConstraintMessageTemplate();
-			context.buildConstraintViolationWithTemplate(messageTemplate).addPropertyNode(verifyField).addConstraintViolation();
-			context.disableDefaultConstraintViolation();
-		} catch (IllegalArgumentException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		} catch (NoSuchFieldException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		} catch (SecurityException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		} catch (IllegalAccessException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
 		return false;
 	}
 
