@@ -78,10 +78,6 @@ public class ValidDirective implements TemplateDirectiveModel {
 				message += valid.get("message");
 			}
 		}
-		if(compare != null && compare.verifyField().equals(field.getName())) {
-			rule += String.format("\n\t\t\t\tequalTo:\'#%s\',", compare.field());
-			message += ("\n\t\t\t\tequalTo:\"" + compare.message() + "\",");
-		}
 		if(!rule.isEmpty()) {
 			result.put("rule", rule.substring(0, rule.length() - 1));
 		}
