@@ -9,8 +9,11 @@ import org.hibernate.validator.constraints.NotEmpty;
 @CustomValidator
 public class UserEditModel {
 
+	private int id;
+	
 	@NotEmpty(message = "不能为空")
 	@Size(min = 6, max = 15, message = "请输入长度在{min}到{max}之间的字符串")
+	@Remote(verifyClass = UserNameValid.class, verifyMethod = "isValid", additionalField = "id")
 	private String userName;
 
 	@NotEmpty(message = "不能为空")
@@ -25,6 +28,14 @@ public class UserEditModel {
 	@NotEmpty(message = "不能为空")
 	@Email(message = "不符合邮箱规则")
 	private String Email;
+	
+	public int getId() {
+		return id;
+	}
+
+	public void setId(int id) {
+		this.id = id;
+	}
 
 	public String getUserName() {
 		return userName;

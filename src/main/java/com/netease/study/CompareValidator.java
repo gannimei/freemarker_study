@@ -11,7 +11,6 @@ public class CompareValidator implements CustomConstraintValidator<Compare> {
 	 */
 	public void initialize(Compare constraintAnnotation) {
 		// TODO Auto-generated method stub
-		System.out.println(constraintAnnotation.verifyField());
 		verifyField = constraintAnnotation.verifyField();
 	}
 
