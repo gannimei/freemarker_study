@@ -23,6 +23,7 @@ public class ValidCreator {
 		this.creator.put(Email.class, ValidCreator.class.getDeclaredMethod("CreateEmailRule", Annotation.class));
 		this.creator.put(Min.class, ValidCreator.class.getDeclaredMethod("CreateMinRule", Annotation.class));
 		this.creator.put(Length.class, ValidCreator.class.getDeclaredMethod("CreateLengthRule", Annotation.class));
+		this.creator.put(Compare.class, ValidCreator.class.getDeclaredMethod("CreateCompareRule", Annotation.class));
 	}
 
 	public Map<String, String> CreateValidation(Annotation a)
@@ -90,5 +91,13 @@ public class ValidCreator {
 			result.put("message", "\n\t\t\t\trangelength: \"" + message + "\",");
 		}
 		return result;
+	}
+
+	private Map<String, String> CreateCompareRule(Annotation a) {
+		Map<String, String> result = new HashMap<String, String>();
+		Compare compare = (Compare) a;
+		result.put("rule", "\n\t\t\t\tequalTo:\"#" + compare.verifyField() + "\",");
+		result.put("message", "\n\t\t\t\tequalTo:\"" + compare.message() + "\",");
+		return result;	
 	}
 }
